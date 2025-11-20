@@ -199,7 +199,6 @@
         ::-webkit-scrollbar-thumb { background: #333; border: 1px solid #000; }
         ::-webkit-scrollbar-thumb:hover { background: var(--cyber-cyan); }
     </style>
-<link rel="stylesheet" href="/index.css">
 </head>
 <body>
     <div id="mouse-spotlight"></div>
@@ -269,9 +268,9 @@
                         <circle cx="50" cy="50" r="48" fill="none" stroke="#222" stroke-width="1" />
                         <circle cx="50" cy="50" r="48" fill="none" stroke="var(--cyber-cyan)" stroke-width="1.5" stroke-dasharray="15 25" style="transition: stroke 0.5s ease;" />
                     </svg>
-                    <div class="absolute inset-4 rounded-full flex items-center justify-center border-4 border-[#1a1a1a] shadow-[0_0_40px_var(--cyber-glow)] bg-black/20" style="transition: box-shadow 0.5s ease;">
-                         <i class="fas fa-user-shield text-8xl text-cyan opacity-80" style="transition: color 0.5s ease;"></i>
-                    </div>
+                    <div class="absolute inset-4 rounded-full flex items-center justify-center border-4 border-[#1a1a1a] shadow-[0_0_40px_var(--cyber-glow)] bg-black/20 overflow-hidden" style="transition: box-shadow 0.5s ease;">
+     <img src="profile.jpg" alt="Zohaib Hassan" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+</div>
                 </div>
             </div>
         </div>
@@ -564,6 +563,5 @@
         });
 
     </script>
-<script type="module" src="/index.tsx"></script>
 </body>
 </html>

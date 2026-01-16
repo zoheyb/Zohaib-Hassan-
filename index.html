@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zohaib Hassan - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-cyan': '#00fff9',
+                        'dark-bg': '#0a0e27',
+                        'dark-card': '#141937',
+                    }
+                }
+            },
+            safelist: [
+                'border-neon-cyan/20', 'hover:border-neon-cyan', 'hover:shadow-neon-cyan/20', 'text-neon-cyan', 'border-neon-cyan/30', 'hover:bg-neon-cyan', 'bg-neon-cyan', 'from-neon-cyan', 'group-hover:text-neon-cyan',
+                'border-purple-500/20', 'hover:border-purple-500', 'hover:shadow-purple-500/20', 'text-purple-500', 'border-purple-500/30', 'hover:bg-purple-500', 'bg-purple-500', 'from-purple-500', 'group-hover:text-purple-500',
+                'border-emerald-500/20', 'hover:border-emerald-500', 'hover:shadow-emerald-500/20', 'text-emerald-500', 'border-emerald-500/30', 'hover:bg-emerald-500', 'bg-emerald-500', 'from-emerald-500', 'group-hover:text-emerald-500',
+                'border-yellow-500/20', 'hover:border-yellow-500', 'hover:shadow-yellow-500/20', 'text-yellow-500', 'border-yellow-500/30', 'hover:bg-yellow-500', 'bg-yellow-500', 'from-yellow-500', 'group-hover:text-yellow-500',
+                'border-blue-500/20', 'hover:border-blue-500', 'hover:shadow-blue-500/20', 'text-blue-500', 'border-blue-500/30', 'hover:bg-blue-500', 'bg-blue-500', 'from-blue-500', 'group-hover:text-blue-500'
+            ]
+        }
+    </script>
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Gradient text animation */
+        .gradient-text {
+            background: linear-gradient(90deg, #00fff9, #00b3ff, #00fff9);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Hexagon container */
+        .hexagon-container {
+            position: relative;
+            width: 400px;
+            height: 460px; /* Adjusted for hexagon ratio */
+            margin: 0 auto;
+        }
+
+        .hexagon {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: linear-gradient(145deg, rgba(0, 255, 249, 0.3), rgba(0, 179, 255, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: glow-pulse 3s ease-in-out infinite;
+        }
+
+        .hexagon::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            background: #0a0e27;
+            z-index: 1;
+        }
+
+        .hexagon img {
+            position: relative;
+            z-index: 2;
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        @keyframes glow-pulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(0, 255, 249, 0.5),
+                            0 0 60px rgba(0, 255, 249, 0.3),
+                            0 0 90px rgba(0, 255, 249, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(0, 255, 249, 0.7),
+                            0 0 80px rgba(0, 255, 249, 0.5),
+                            0 0 120px rgba(0, 255, 249, 0.3);
+            }
+        }
+        
+        .hexagon-pulse:hover .hexagon {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+        
+        /* Navbar scroll effect */
+        .navbar-scrolled {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 20px rgba(0, 255, 249, 0.1);
+        }
+
+        /* Active nav link */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00fff9, #00b3ff);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link.active {
+            color: #00fff9;
+        }
+        
+        /* Photo Modal */
+        .photo-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-photo {
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Fade-in on scroll animation */
+        .fade-in-element {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .fade-in-element.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Light Mode Styles */
+        :root:not(.dark) {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #343a40;
+            --text-secondary: #6c757d;
+            --accent-color: #007bff;
+            --accent-hover: #0056b3;
+            --border-color: #dee2e6;
+        }
+        :root:not(.dark) body { background: var(--bg-primary) !important; color: var(--text-primary) !important; }
+        :root:not(.dark) .bg-dark-bg, :root:not(.dark) .from-dark-bg, :root:not(.dark) .to-dark-bg { background: var(--bg-primary) !important; }
+        :root:not(.dark) .bg-dark-card, :root:not(.dark) .from-dark-card, :root:not(.dark) .to-dark-card { background: var(--bg-secondary) !important; border-color: var(--border-color) !important; }
+        :root:not(.dark) .text-white { color: var(--text-primary) !important; }
+        :root:not(.dark) .text-gray-300, :root:not(.dark) .text-gray-400, :root:not(.dark) .text-gray-500 { color: var(--text-secondary) !important; }
+        :root:not(.dark) .text-neon-cyan, :root:not(.dark) .gradient-text { color: var(--accent-color) !important; }
+        :root:not(.dark) .border-neon-cyan, :root:not(.dark) [class*="border-neon-cyan"] { border-color: var(--accent-color) !important; }
+        :root:not(.dark) .nav-link:hover, :root:not(.dark) .nav-link.active { color: var(--accent-color) !important; }
+        :root:not(.dark) .nav-link::after { background: linear-gradient(90deg, var(--accent-color), var(--accent-hover)) !important; }
+        :root:not(.dark) .navbar-scrolled { background: rgba(255, 255, 255, 0.98) !important; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08) !important; }
+        :root:not(.dark) .btn-primary, :root:not(.dark) a[class*="bg-gradient-to-r"] { background: var(--accent-color) !important; color: #ffffff !important; border-color: var(--accent-color) !important; }
+        :root:not(.dark) .btn-primary:hover, :root:not(.dark) a[class*="bg-gradient-to-r"]:hover { background: var(--accent-hover) !important; }
+        :root:not(.dark) .btn-secondary { background: #e9ecef !important; color: var(--text-primary) !important; border-color: var(--border-color) !important; }
+        :root:not(.dark) .btn-secondary:hover { background: var(--accent-color) !important; color: #ffffff !important; }
+        :root:not(.dark) .border-slate-700, :root:not(.dark) [class*="border-"].hover\:border-neon-cyan, :root:not(.dark) .border-gray-700 { border-color: var(--border-color) !important; }
+        :root:not(.dark) .gradient-text { background: linear-gradient(90deg, var(--accent-color), var(--accent-hover), var(--accent-color)) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; }
+        :root:not(.dark) #theme-toggle i.fa-moon { display: none; }
+        :root:not(.dark) #theme-toggle i.fa-sun { display: inline-block; }
+        :root:not(.dark) #about, :root:not(.dark) #projects, :root:not(.dark) #certificates, :root:not(.dark) #services { background: var(--bg-secondary) !important; }
+        :root:not(.dark) .hexagon::before { background: var(--bg-primary) !important; }
+        :root:not(.dark) .hexagon { background: linear-gradient(145deg, rgba(0, 123, 255, 0.15), rgba(0, 86, 179, 0.08)) !important; }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-dark-bg text-white">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 lg:px-20 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div id="nav-photo-trigger" class="cursor-pointer">
+                    <img src="https://picsum.photos/seed/zohaib/400/400" alt="Zohaib Hassan" class="w-12 h-12 rounded-full border-2 border-neon-cyan" />
+                </div>
+                <div class="text-2xl font-bold">
+                    <span class="text-white">zohaib</span><span class="text-neon-cyan">.dev</span>
+                </div>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <ul id="desktop-menu" class="hidden md:flex space-x-8 text-lg">
+                <li><a href="#about" data-section="about" class="nav-link">About</a></li>
+                <li><a href="#technologies" data-section="technologies" class="nav-link">Skills</a></li>
+                <li><a href="#projects" data-section="projects" class="nav-link">Projects</a></li>
+                <li><a href="#certificates" data-section="certificates" class="nav-link">Certificates</a></li>
+                <li><a href="#services" data-section="services" class="nav-link">Services</a></li>
+                <li><a href="#contact" data-section="contact" class="nav-link">Contact</a></li>
+            </ul>
+    
+            <!-- Theme Toggle -->
+            <button id="theme-toggle" class="text-neon-cyan text-2xl hover:scale-110 transition-transform">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun hidden"></i>
+            </button>
+    
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-neon-cyan text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-card mt-4 mx-6 rounded-lg shadow-lg">
+            <ul class="flex flex-col space-y-4 p-6 text-lg">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#technologies" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#certificates" class="nav-link">Certificates</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center pt-20">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6 text-center md:text-left">
+                    <h3 class="text-2xl md:text-3xl font-light text-gray-300">Hello, It's Me</h3>
+                    <h1 class="text-5xl md:text-7xl font-bold leading-tight">Zohaib Hassan</h1>
+                    <div class="text-2xl md:text-3xl font-medium h-10">
+                        <span id="typed-text" class="gradient-text"></span><span class="animate-ping">|</span>
+                    </div>
+                    <p class="text-gray-400 text-lg leading-relaxed max-w-xl mx-auto md:mx-0">Passionate about Cybersecurity & Tech Innovation | Building Secure Systems for the Future</p>
+                    <div class="flex space-x-4 pt-4 justify-center md:justify-start">
+                        <a href="https://www.linkedin.com/in/zohaib-hassan-b3381134a" target="_blank" class="w-12 h-12 flex items-center justify-center border-2 border-neon-cyan rounded-full text-neon-cyan hover:bg-neon-cyan hover:text-dark-bg transition-all">
+                            <i class="fab fa-linkedin-in text-xl"></i>
+                        </a>
+                        <a href="#" target="_blank" class="w-12 h-12 flex items-center justify-center border-2 border-neon-cyan rounded-full text-neon-cyan hover:bg-neon-cyan hover:text-dark-bg transition-all">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                    <div class="flex flex-wrap gap-4 pt-6 justify-center md:justify-start">
+                        <a href="#projects" class="btn-primary bg-gradient-to-r from-neon-cyan to-blue-500 px-8 py-4 rounded-full text-lg font-semibold text-dark-bg">View Projects</a>
+                        <a href="#" download class="btn-secondary px-8 py-4 rounded-full text-lg font-semibold text-neon-cyan">Download CV</a>
+                    </div>
+                </div>
+    
+                <div class="hidden md:flex items-center justify-center relative flex-col">
+                    <div id="hexagon-photo-trigger" class="hexagon-container cursor-pointer hexagon-pulse">
+                        <div class="hexagon">
+                            <img src="https://picsum.photos/seed/zohaib/400/400" alt="Zohaib Hassan" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-12 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+    
+            <div class="grid md:grid-cols-2 gap-12 items-center fade-in-element">
+                <div class="space-y-6">
+                    <h3 class="text-3xl font-bold text-white">I'm <span class="gradient-text">Zohaib Hassan</span></h3>
+                    <p class="text-gray-300 text-lg leading-relaxed">First-semester Computer Systems Engineering student at Sukkur IBA University with a passion for Tech Innovation. I am currently building strong proficiency in C++ and Arduino while exploring the world of Cybersecurity. I am excited to learn, build, and contribute to the future of secure computing.</p>
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="bg-dark-bg p-6 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan/50 transition-all">
+                            <h4 class="text-3xl font-bold gradient-text">2+</h4>
+                            <p class="text-gray-400 mt-2">Projects Completed</p>
+                        </div>
+                        <div class="bg-dark-bg p-6 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan/50 transition-all">
+                            <h4 class="text-3xl font-bold gradient-text">3+</h4>
+                            <p class="text-gray-400 mt-2">Certifications</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <h3 class="text-2xl font-bold text-white mb-4">What I Do</h3>
+                    <div class="flex items-start space-x-4 bg-dark-bg p-5 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/20 transition-all">
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shield-halved text-dark-bg text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Cybersecurity Analyst (Aspiring)</h4>
+                            <p class="text-gray-400 text-sm">Network Security, Secure Computing Principles</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 bg-dark-bg p-5 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/20 transition-all">
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cogs text-dark-bg text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Systems Engineer (In Training)</h4>
+                            <p class="text-gray-400 text-sm">C++, Arduino, Hardware Integration</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 bg-dark-bg p-5 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/20 transition-all">
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fab fa-java text-dark-bg text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Java Developer</h4>
+                            <p class="text-gray-400 text-sm">Building robust backend applications and services.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 bg-dark-bg p-5 rounded-lg border border-neon-cyan/20 hover:border-neon-cyan hover:shadow-lg hover:shadow-neon-cyan/20 transition-all">
+                        <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-brain text-dark-bg text-xl"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">AI App Development</h4>
+                            <p class="text-gray-400 text-sm">Leveraging Python and AI models to create intelligent applications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Technologies Section -->
+    <section id="technologies" class="py-20 bg-dark-bg">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">My <span class="gradient-text">Skills</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+    
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg p-8 rounded-2xl border-2 border-neon-cyan/20 hover:border-neon-cyan hover:shadow-2xl hover:shadow-neon-cyan/20 transition-all duration-300 hover:scale-105 fade-in-element">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-book text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Core Concepts</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-neon-cyan border border-neon-cyan/30 hover:bg-neon-cyan hover:text-dark-bg transition-all cursor-default">Data Structures</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-neon-cyan border border-neon-cyan/30 hover:bg-neon-cyan hover:text-dark-bg transition-all cursor-default">Algorithms</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-neon-cyan border border-neon-cyan/30 hover:bg-neon-cyan hover:text-dark-bg transition-all cursor-default">Linear Algebra</span>
+                    </div>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg p-8 rounded-2xl border-2 border-purple-500/20 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 150ms;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-microchip text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Languages & Hardware</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-purple-500 border border-purple-500/30 hover:bg-purple-500 hover:text-dark-bg transition-all cursor-default">Java</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-purple-500 border border-purple-500/30 hover:bg-purple-500 hover:text-dark-bg transition-all cursor-default">Python</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-purple-500 border border-purple-500/30 hover:bg-purple-500 hover:text-dark-bg transition-all cursor-default">C++</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-purple-500 border border-purple-500/30 hover:bg-purple-500 hover:text-dark-bg transition-all cursor-default">Arduino</span>
+                    </div>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg p-8 rounded-2xl border-2 border-emerald-500/20 hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 300ms;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-search text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Fields of Interest</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-emerald-500 border border-emerald-500/30 hover:bg-emerald-500 hover:text-dark-bg transition-all cursor-default">AI App Development</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-emerald-500 border border-emerald-500/30 hover:bg-emerald-500 hover:text-dark-bg transition-all cursor-default">Cybersecurity</span>
+                        <span class="px-4 py-2 bg-dark-bg rounded-full text-sm text-emerald-500 border border-emerald-500/30 hover:bg-emerald-500 hover:text-dark-bg transition-all cursor-default">Tech Innovation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">My <span class="gradient-text">Projects</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+    
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl overflow-hidden border-2 border-neon-cyan/20 hover:border-neon-cyan hover:shadow-2xl hover:shadow-neon-cyan/20 transition-all duration-300 hover:scale-105 fade-in-element">
+                    <div class="h-48 bg-gradient-to-br from-neon-cyan/20 to-blue-500/20 flex items-center justify-center overflow-hidden relative">
+                        <i class="fas fa-user-circle text-7xl text-neon-cyan opacity-50 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-4 right-4 bg-neon-cyan text-dark-bg px-3 py-1 rounded-full text-xs font-bold">Completed</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-neon-cyan transition-colors">Personal Portfolio</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed text-sm">Modern single-page portfolio built with Angular, showcasing projects, skills, and a dynamic UI with light/dark modes.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-neon-cyan border border-neon-cyan/30">Angular</span>
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-neon-cyan border border-neon-cyan/30">TypeScript</span>
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-neon-cyan border border-neon-cyan/30">Tailwind CSS</span>
+                        </div>
+                        <a href="#" target="_blank" class="block w-full bg-gradient-to-r from-neon-cyan to-blue-500 text-dark-bg px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition-transform">View Project</a>
+                    </div>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl overflow-hidden border-2 border-yellow-500/20 hover:border-yellow-500 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 150ms;">
+                    <div class="h-48 bg-gradient-to-br from-yellow-500/20 to-blue-500/20 flex items-center justify-center overflow-hidden relative">
+                        <i class="fas fa-microchip text-7xl text-yellow-500 opacity-50 group-hover:scale-110 transition-transform"></i>
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-dark-bg px-3 py-1 rounded-full text-xs font-bold">Completed</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-yellow-500 transition-colors">Arduino Security System</h3>
+                        <p class="text-gray-400 mb-4 leading-relaxed text-sm">A prototype of a home security system using Arduino, various sensors, and C++ for logic and control.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-yellow-500 border border-yellow-500/30">Arduino</span>
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-yellow-500 border border-yellow-500/30">C++</span>
+                            <span class="px-3 py-1 bg-dark-bg rounded-full text-xs text-yellow-500 border border-yellow-500/30">Sensors</span>
+                        </div>
+                        <a href="#" target="_blank" class="block w-full bg-gradient-to-r from-yellow-500 to-blue-500 text-dark-bg px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition-transform">View Project</a>
+                    </div>
+                </div>
+                
+                <div class="col-span-full mt-8 mb-4 fade-in-element">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
+                        <h3 class="text-2xl font-bold text-white"><span class="text-yellow-500">Upcoming Projects</span></h3>
+                        <div class="flex-1 h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
+                    </div>
+                </div>
+    
+                <div class="group bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/20 transition-all duration-300 hover:scale-105 fade-in-element">
+                    <div class="h-40 bg-gradient-to-br from-blue-500/10 to-blue-500/10 flex items-center justify-center relative">
+                        <i class="fas fa-network-wired text-6xl text-blue-500 opacity-40"></i>
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold">COMING SOON</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Network Traffic Analyzer</h3>
+                        <p class="text-gray-400 mb-4 text-sm leading-relaxed h-12">A command-line tool to capture and analyze network packets, identifying potential security threats.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-blue-500 border border-slate-700">C++</span>
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-blue-500 border border-slate-700">Networking</span>
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-blue-500 border border-slate-700">Cybersecurity</span>
+                        </div>
+                        <button disabled class="block w-full bg-slate-700 text-gray-500 px-4 py-2 rounded-lg font-semibold text-center cursor-not-allowed">Under Development</button>
+                    </div>
+                </div>
+                <div class="group bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 150ms;">
+                    <div class="h-40 bg-gradient-to-br from-purple-500/10 to-blue-500/10 flex items-center justify-center relative">
+                        <i class="fas fa-lock text-6xl text-purple-500 opacity-40"></i>
+                        <div class="absolute top-4 right-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold">COMING SOON</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Secure IoT Device</h3>
+                        <p class="text-gray-400 mb-4 text-sm leading-relaxed h-12">Designing and building an IoT device with a strong focus on security principles and encryption from the ground up.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-purple-500 border border-slate-700">Arduino</span>
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-purple-500 border border-slate-700">C++</span>
+                            <span class="px-3 py-1 bg-slate-900 rounded-full text-xs text-purple-500 border border-slate-700">Cryptography</span>
+                        </div>
+                        <button disabled class="block w-full bg-slate-700 text-gray-500 px-4 py-2 rounded-lg font-semibold text-center cursor-not-allowed">Under Development</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Certificates Section -->
+    <section id="certificates" class="py-20 bg-gradient-to-b from-dark-card to-dark-bg">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">My <span class="gradient-text">Certificates</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-6 border-2 border-neon-cyan/20 hover:border-neon-cyan hover:shadow-2xl hover:shadow-neon-cyan/20 transition-all duration-300 hover:scale-105 fade-in-element">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-robot text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-cyan transition-colors">ROBOCOMPX: An Exhibition Featuring Robotics</h3>
+                    <p class="text-gray-400 text-sm mb-1"><i class="fas fa-building mr-2 text-neon-cyan"></i>Sukkur IBA University</p>
+                    <p class="text-gray-500 text-xs mb-4"><i class="fas fa-calendar mr-2"></i>2025</p>
+                    <a href="#" target="_blank" class="inline-block w-full bg-gradient-to-r from-neon-cyan to-blue-500 text-dark-bg px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-certificate mr-2"></i>View Certificate
+                    </a>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-6 border-2 border-yellow-500/20 hover:border-yellow-500 hover:shadow-2xl hover:shadow-yellow-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 150ms;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-yellow-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-shield-alt text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-500 transition-colors">Introduction to Cybersecurity</h3>
+                    <p class="text-gray-400 text-sm mb-1"><i class="fas fa-building mr-2 text-yellow-500"></i>Online Platform</p>
+                    <p class="text-gray-500 text-xs mb-4"><i class="fas fa-calendar mr-2"></i>2025</p>
+                    <a href="#" target="_blank" class="inline-block w-full bg-gradient-to-r from-yellow-500 to-blue-500 text-dark-bg px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-certificate mr-2"></i>View Certificate
+                    </a>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-6 border-2 border-purple-500/20 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 300ms;">
+                    <div class="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-code text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-500 transition-colors">C++ for Programmers</h3>
+                    <p class="text-gray-400 text-sm mb-1"><i class="fas fa-building mr-2 text-purple-500"></i>Online Platform</p>
+                    <p class="text-gray-500 text-xs mb-4"><i class="fas fa-calendar mr-2"></i>2025</p>
+                    <a href="#" target="_blank" class="inline-block w-full bg-gradient-to-r from-purple-500 to-blue-500 text-dark-bg px-4 py-2 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-certificate mr-2"></i>View Certificate
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gradient-to-b from-dark-bg to-dark-card">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">My <span class="gradient-text">Services</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-8 border-2 border-emerald-500/20 hover:border-emerald-500 hover:shadow-2xl hover:shadow-emerald-500/20 transition-all duration-300 hover:scale-105 fade-in-element">
+                    <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                        <i class="fas fa-code text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-emerald-500 transition-colors">Web Development</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Creating responsive, modern, and high-performance websites and web applications.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1"></i><span>Frontend Development</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1"></i><span>Backend Development</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1"></i><span>Responsive Design</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block w-full bg-gradient-to-r from-emerald-500 to-blue-500 text-dark-bg px-6 py-3 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-arrow-right mr-2"></i>Get Started
+                    </a>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-8 border-2 border-purple-500/20 hover:border-purple-500 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 150ms;">
+                    <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                        <i class="fas fa-brain text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-purple-500 transition-colors">AI App Development</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Building intelligent applications and integrating AI models to solve complex problems.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-purple-500 mr-2 mt-1"></i><span>Custom AI Solutions</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-purple-500 mr-2 mt-1"></i><span>Machine Learning Models</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-purple-500 mr-2 mt-1"></i><span>API Integration</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block w-full bg-gradient-to-r from-purple-500 to-blue-500 text-dark-bg px-6 py-3 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-arrow-right mr-2"></i>Get Started
+                    </a>
+                </div>
+                <div class="group bg-gradient-to-br from-dark-card to-dark-bg rounded-2xl p-8 border-2 border-neon-cyan/20 hover:border-neon-cyan hover:shadow-2xl hover:shadow-neon-cyan/20 transition-all duration-300 hover:scale-105 fade-in-element" style="transition-delay: 300ms;">
+                    <div class="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-neon-cyan to-blue-500 rounded-xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform">
+                        <i class="fab fa-python text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 group-hover:text-neon-cyan transition-colors">Python Automation</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">Developing custom scripts and tools to automate repetitive tasks and improve workflow efficiency.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-2">
+                        <li class="flex items-start"><i class="fas fa-check text-neon-cyan mr-2 mt-1"></i><span>Task Automation</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-neon-cyan mr-2 mt-1"></i><span>Web Scraping</span></li>
+                        <li class="flex items-start"><i class="fas fa-check text-neon-cyan mr-2 mt-1"></i><span>Data Processing Scripts</span></li>
+                    </ul>
+                    <a href="#contact" class="inline-block w-full bg-gradient-to-r from-neon-cyan to-blue-500 text-dark-bg px-6 py-3 rounded-lg font-semibold text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-arrow-right mr-2"></i>Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-dark-card to-dark-bg">
+        <div class="container mx-auto px-6 lg:px-20">
+            <div class="text-center mb-16 fade-in-element">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-neon-cyan to-blue-500 mx-auto"></div>
+            </div>
+            <div class="max-w-4xl mx-auto fade-in-element">
+                <div class="bg-dark-bg rounded-2xl p-8 md:p-12 border-2 border-neon-cyan/20">
+                    <form id="contact-form" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" name="name" required class="w-full px-4 py-3 bg-dark-card border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-neon-cyan focus:outline-none" placeholder="Your Name">
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-dark-card border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-neon-cyan focus:outline-none" placeholder="Your Email">
+                        </div>
+                        <textarea name="message" rows="6" required class="w-full px-4 py-3 bg-dark-card border-2 border-gray-700 rounded-lg text-white placeholder-gray-500 focus:border-neon-cyan focus:outline-none resize-none" placeholder="Your Message"></textarea>
+                        <button type="submit" id="submit-btn" class="w-full bg-gradient-to-r from-neon-cyan to-blue-500 text-dark-bg px-8 py-4 rounded-lg font-bold text-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:cursor-not-allowed">
+                            <span id="submit-btn-idle"><i class="fas fa-paper-plane mr-2"></i>Send Message</span>
+                            <span id="submit-btn-sending" class="hidden"><i class="fas fa-spinner fa-spin mr-2"></i>Sending...</span>
+                        </button>
+                    </form>
+    
+                    <div id="contact-success" class="hidden mt-4 bg-emerald-500/20 border border-emerald-500 text-emerald-400 px-6 py-4 rounded-lg text-center">
+                      Message sent successfully! I'll get back to you soon.
+                    </div>
+                    <div id="contact-error" class="hidden mt-4 bg-red-500/20 border border-red-500 text-red-400 px-6 py-4 rounded-lg text-center">
+                      Oops! Something went wrong. Please try again.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark-card border-t border-gray-800 py-8">
+        <div class="container mx-auto px-6 lg:px-20 text-center text-gray-400">
+            <p>© <span id="current-year"></span> Zohaib Hassan. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="hidden fixed z-[9999] left-0 top-0 w-full h-full bg-black/95 cursor-pointer items-center justify-center">
+        <span class="modal-close absolute top-8 right-12 text-neon-cyan text-5xl font-bold cursor-pointer transition-colors hover:text-white">&times;</span>
+        <img class="modal-photo max-w-[90%] max-h-[90vh] object-contain rounded-2xl shadow-[0_0_50px_rgba(0,255,249,0.3)] cursor-default" 
+             src="https://picsum.photos/seed/zohaib/400/400" 
+             alt="Zohaib Hassan">
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const navbar = document.getElementById('navbar');
+            const themeToggle = document.getElementById('theme-toggle');
+            const moonIcon = themeToggle.querySelector('.fa-moon');
+            const sunIcon = themeToggle.querySelector('.fa-sun');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('#desktop-menu a.nav-link');
+            const typedTextSpan = document.getElementById('typed-text');
+            const contactForm = document.getElementById('contact-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const submitBtnIdle = document.getElementById('submit-btn-idle');
+            const submitBtnSending = document.getElementById('submit-btn-sending');
+            const contactSuccess = document.getElementById('contact-success');
+            const contactError = document.getElementById('contact-error');
+            const photoModal = document.getElementById('photo-modal');
+            const modalPhoto = photoModal.querySelector('.modal-photo');
+            const photoTriggers = [
+                document.getElementById('nav-photo-trigger'),
+                document.getElementById('hexagon-photo-trigger')
+            ];
+
+            // --- State and Data ---
+            const typingWords = ['Computer Systems Engineering Student', 'Cybersecurity Enthusiast', 'Tech Innovator'];
+            let isDarkMode = true;
+
+            // --- Functions ---
+
+            // Theme Management
+            function applyTheme(isDark) {
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    moonIcon.classList.remove('hidden');
+                    sunIcon.classList.add('hidden');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    moonIcon.classList.add('hidden');
+                    sunIcon.classList.remove('hidden');
+                }
+                isDarkMode = isDark;
+            }
+
+            function initializeTheme() {
+                const storedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const useDark = storedTheme === 'dark' || (!storedTheme && prefersDark);
+                applyTheme(useDark);
+            }
+
+            function toggleTheme() {
+                const newIsDark = !isDarkMode;
+                applyTheme(newIsDark);
+                localStorage.setItem('theme', newIsDark ? 'dark' : 'light');
+            }
+
+            // Scroll Effects
+            function handleScroll() {
+                // Navbar style
+                if (window.scrollY > 50) {
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    navbar.classList.remove('navbar-scrolled');
+                }
+
+                // Active nav link
+                let currentSection = 'home';
+                const scrollPosition = window.scrollY + 150;
+
+                sections.forEach(section => {
+                    if (section.offsetTop <= scrollPosition && section.offsetTop + section.offsetHeight > scrollPosition) {
+                        currentSection = section.id;
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.dataset.section === currentSection);
+                });
+            }
+            
+            // Mobile Menu
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('hidden');
+            }
+
+            function closeMobileMenu() {
+                mobileMenu.classList.add('hidden');
+            }
+
+            // Typing Animation
+            function startTypingAnimation() {
+                let wordIndex = 0;
+                let charIndex = 0;
+                let isDeleting = false;
+
+                setInterval(() => {
+                    const currentWord = typingWords[wordIndex];
+                    let currentText = '';
+
+                    if (isDeleting) {
+                        currentText = currentWord.substring(0, charIndex - 1);
+                        charIndex--;
+                    } else {
+                        currentText = currentWord.substring(0, charIndex + 1);
+                        charIndex++;
+                    }
+                    
+                    typedTextSpan.textContent = currentText;
+
+                    if (!isDeleting && charIndex === currentWord.length) {
+                        setTimeout(() => isDeleting = true, 2000);
+                    } else if (isDeleting && charIndex === 0) {
+                        isDeleting = false;
+                        wordIndex = (wordIndex + 1) % typingWords.length;
+                    }
+                }, 100);
+            }
+
+            // Photo Modal
+            function openPhotoModal() {
+                photoModal.classList.remove('hidden');
+                photoModal.classList.add('active');
+            }
+
+            function closePhotoModal() {
+                photoModal.classList.add('hidden');
+                photoModal.classList.remove('active');
+            }
+            
+            // Contact Form
+            function handleContactSubmit(event) {
+                event.preventDefault();
+                submitBtn.disabled = true;
+                submitBtnIdle.classList.add('hidden');
+                submitBtnSending.classList.remove('hidden');
+                contactSuccess.classList.add('hidden');
+                contactError.classList.add('hidden');
+
+                // Mock success for demonstration
+                setTimeout(() => {
+                    contactSuccess.classList.remove('hidden');
+                    contactForm.reset();
+                    
+                    submitBtn.disabled = false;
+                    submitBtnIdle.classList.remove('hidden');
+                    submitBtnSending.classList.add('hidden');
+
+                    setTimeout(() => contactSuccess.classList.add('hidden'), 5000);
+                }, 1000);
+            }
+            
+            // Footer Year
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // --- Event Listeners ---
+            window.addEventListener('scroll', handleScroll);
+            themeToggle.addEventListener('click', toggleTheme);
+            mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+            mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobileMenu));
+            contactForm.addEventListener('submit', handleContactSubmit);
+            
+            photoTriggers.forEach(trigger => trigger.addEventListener('click', openPhotoModal));
+            photoModal.addEventListener('click', closePhotoModal);
+            modalPhoto.addEventListener('click', (e) => e.stopPropagation()); // Prevent modal from closing when clicking on the photo itself
+
+            // --- Intersection Observer for fade-in animation ---
+            const fadeInElements = document.querySelectorAll('.fade-in-element');
+
+            const observerOptions = {
+                root: null, // relative to the viewport
+                rootMargin: '0px',
+                threshold: 0.1 // trigger when 10% of the element is visible
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            fadeInElements.forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- Initialization ---
+            initializeTheme();
+            handleScroll(); // Run on load
+            startTypingAnimation();
+        });
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
